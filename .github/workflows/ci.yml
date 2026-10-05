@@ -1,0 +1,40 @@
+name: Python and Docker checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.7"
+          enable-cache: true
+      - run: uv sync --frozen --python 3.13
+      - run: uv run ruff check app tests
+      - run: uv run ruff format --check app tests
+      - run: uv run mypy app
+      - run: uv run pytest
+      - name: Build and start container
+        run: docker compose up --build --detach --wait --wait-timeout 90
+      - name: HTTP smoke test in Docker
+        run: |
+          curl --fail http://127.0.0.1:8000/health
+          curl --fail http://127.0.0.1:8000/api/profile
+          curl --fail http://127.0.0.1:8000/ > /tmp/home.html
+          grep -q 'Federico' /tmp/home.html
+          curl --fail http://127.0.0.1:8000/cv -o /tmp/cv.pdf
+          cmp app/assets/CV-Federico-Mariottini.pdf /tmp/cv.pdf
+      - name: Container logs
+        if: always()
+        run: docker compose logs
+      - name: Stop container
+        if: always()
+        run: docker compose down

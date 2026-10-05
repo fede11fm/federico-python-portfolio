@@ -1,0 +1,7 @@
+*
+!app/
+!app/**
+!pyproject.toml
+!uv.lock
+!Dockerfile
+!LICENSE
