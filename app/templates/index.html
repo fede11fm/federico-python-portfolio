@@ -2,230 +2,356 @@
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#191a1b" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f3ed" />
     <meta
       name="description"
-      content="Federico Mariottini, sviluppatore software ad Arezzo. Esperienze in sviluppo di gestionali, JavaScript, React e SQL. Competenze, formazione tecnica e curriculum completo."
+      content="ORÉVA, un atelier orafo immaginario di Arezzo. Scopri tre collezioni di gioielli d’autore ed esplora un anello in 3D."
     />
-    <title>{{ profile.name }} — {{ profile.role }}</title>
+    <title>{{ catalog.name }} — L’oro prende una nuova forma</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
     <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ff6b35'/%3E%3Cpath d='M20 47V17h28M20 31h22' stroke='%23191a1b' stroke-width='7' fill='none'/%3E%3C/svg%3E"
+      rel="preload"
+      href="/static/fonts/cormorant-regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/oreva.js" defer></script>
   </head>
   <body>
-    <a class="skip" href="#esperienza">Vai alle esperienze</a>
-    <header>
-      <a class="brand" href="#home" aria-label="Federico Mariottini, inizio"
-        >FM<span>/</span></a
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <div class="announcement">
+      L’arte orafa incontra il design contemporaneo.
+    </div>
+    <header class="site-header">
+      <a class="wordmark" href="#" aria-label="ORÉVA, inizio pagina"
+        >ORÉVA<span>ATELIER ORAFO</span></a
       >
-      <nav aria-label="Navigazione principale">
-        <a href="#esperienza">Percorso</a><a href="#competenze">Competenze</a
-        ><a href="#formazione">Formazione</a
-        ><a href="#progetto">Progetto Python</a>
+      <button
+        class="menu-toggle"
+        aria-label="Apri menu"
+        aria-expanded="false"
+        aria-controls="navigation"
+      >
+        <span></span><span></span>
+      </button>
+      <nav id="navigation" aria-label="Navigazione principale">
+        <a href="#collezioni">Le collezioni</a><a href="#atelier">L’atelier</a
+        ><a href="#su-misura">Su misura</a>
       </nav>
-      <a class="nav-contact" href="#contatti">Contattami <span>↗</span></a>
+      <span class="header-location">AREZZO, TOSCANA</span>
     </header>
-    <main>
-      <section class="hero" id="home">
-        <div class="hero-top">
-          <span>SVILUPPATORE SOFTWARE / PYTHON</span
-          ><span>{{ profile.city | upper }}, ITALIA — {{ year }}</span>
-        </div>
-        <div class="hero-layout">
-          <div class="hero-copy">
-            <h1>{{ profile.name.split(' ', 1)[0] }}<br />{{ profile.name.split(' ', 1)[1] | default('') }}<span>.</span></h1>
-            <p class="hero-subtitle">
-              Una mente curiosa.<br />Una direzione: <em>Python.</em>
-            </p>
-            <p class="bio">{{ profile.summary }}</p>
-            <div class="hero-actions">
-              <a
-                class="button orange"
-                href="{{ url_for('download_cv') }}"
-                download
-                >Scarica CV completo <span>↓</span></a
-              ><a class="underlink" href="#esperienza"
-                >Scopri il mio percorso <span>↗</span></a
-              >
-            </div>
-          </div>
-          <div class="art">
-            <div class="viewport">
-              <canvas
-                id="scene"
-                tabindex="0"
-                aria-label="Monogramma FM tridimensionale. Trascina o usa le frecce per ruotarlo; più e meno per lo zoom."
-              ></canvas>
-              <div id="fallback" hidden aria-label="Monogramma FM">
-                FM<span>.</span>
-              </div>
-            </div>
-            <div class="art-caption">
-              <span>IDENTITÀ, IN TRE DIMENSIONI</span
-              ><span aria-hidden="true">[ FM — 01 ]</span>
-            </div>
-            <div class="scene-controls">
-              <span class="scene-help">Trascina per ruotare</span
-              ><button id="wire" aria-pressed="false">Wireframe</button
-              ><button id="motion" aria-pressed="false">Pausa</button
-              ><button id="reset" aria-label="Ripristina la vista 3D">↺</button>
-            </div>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="fine-line"></span> MATERIA PREZIOSA, ANIMA
+            CONTEMPORANEA
+          </p>
+          <h1 id="hero-title">
+            L’oro prende<br />una nuova<br /><em>forma.</em>
+          </h1>
+          <p class="hero-description">
+            Linee essenziali, volumi inaspettati. Gioielli che raccontano chi
+            sei, senza bisogno di parole.
+          </p>
+          <a class="button button-dark" href="#collezioni"
+            >Scopri le collezioni</a
+          >
+          <div class="hero-bottom">
+            <span>DISEGNATI PER ESSERE TUOI.<br />PENSATI PER RESTARE.</span
+            ><span class="hero-number">01 / 03</span>
           </div>
         </div>
-        <div class="hero-bottom">
-          <span>FRONT-END / BACK-END / DATABASE</span
-          ><a href="#esperienza">SCORRI PER ESPLORARE <span>↓</span></a>
+        <div class="hero-visual">
+          <img
+            class="hero-image"
+            src="/static/images/materia.webp"
+            width="1254"
+            height="1254"
+            alt="Anello Materia in oro giallo, con una fascia scultorea dalle forme morbide"
+            fetchpriority="high"
+          />
+          <div class="hero-image-caption">
+            <span>COLLEZIONE MATERIA</span><span>ORO GIALLO 18 KT</span>
+          </div>
+          <button class="explore-button" data-open-scene>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="m12 2 9 5v10l-9 5-9-5V7l9-5ZM3 7l9 5 9-5M12 12v10"
+              /></svg
+            ><span
+              >Un’altra prospettiva<small>Esplora l’anello in 3D</small></span
+            ><span class="round-plus" aria-hidden="true">+</span>
+          </button>
         </div>
       </section>
-      <div
-        class="tech-ribbon"
-        aria-label="Tecnologie usate nello sviluppo di gestionali"
-      >
-        <span>JavaScript</span><b aria-hidden="true">✳</b><span>React</span
-        ><b aria-hidden="true">✳</b><span>HTML</span
-        ><b aria-hidden="true">✳</b><span>SQL</span><b aria-hidden="true">✳</b
-        ><span>Software development</span>
+      <div class="brand-strip" aria-label="Il mondo ORÉVA">
+        <span>ORO 18 KT</span
+        ><span class="strip-star" aria-hidden="true">✳</span
+        ><span>FORME D’AUTORE</span
+        ><span class="strip-star" aria-hidden="true">✳</span
+        ><span>ISPIRAZIONE ITALIANA</span
+        ><span class="strip-star" aria-hidden="true">✳</span
+        ><span>DETTAGLI CHE RESTANO</span>
       </div>
-      <section class="experience-section section" id="esperienza">
-        <div class="section-title">
-          <span class="eyebrow">01 — PERCORSO INFORMATICO</span>
-          <h2>Esperienza,<br />scritta in codice.</h2>
+      <section
+        class="collections section-space"
+        id="collezioni"
+        aria-labelledby="collections-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 — LE COLLEZIONI</p>
+            <h2 id="collections-title">
+              Piccoli oggetti.<br /><em>Grandi significati.</em>
+            </h2>
+          </div>
+          <p>
+            Tre modi di interpretare la luce.<br />Un unico linguaggio: il tuo.
+          </p>
         </div>
-        <div class="experience-grid">
-          {% for experience in profile.experiences %}
-          <article class="experience">
-            <div class="card-top">
-              <span class="index">{{ '%02d' | format(loop.index) }}</span
-              ><span>{{ experience.period }}</span>
+        <div class="collection-toolbar">
+          <div class="filters" role="group" aria-label="Filtra i gioielli">
+            <button class="active" data-filter="Tutti" aria-pressed="true">
+              Tutti i gioielli</button
+            ><button data-filter="Anelli" aria-pressed="false">Anelli</button
+            ><button data-filter="Orecchini" aria-pressed="false">
+              Orecchini</button
+            ><button data-filter="Collane" aria-pressed="false">Collane</button>
+          </div>
+          <span id="catalog-count" aria-live="polite">3 creazioni</span>
+        </div>
+        <div class="product-grid">
+          {% for product in catalog.products %}
+          <article class="product" data-category="{{ product.category }}">
+            <button
+              class="product-image-button"
+              data-product="{{ product.slug }}"
+              aria-label="Scopri {{ product.name }}: {{ product.category|lower }}"
+            >
+              <img
+                src="{{ product.image }}"
+                alt="{{ product.image_alt }}"
+                width="1254"
+                height="1254"
+                loading="lazy"
+              /><span class="product-category">{{ product.category }}</span
+              ><span class="product-discover"
+                >Scopri <span aria-hidden="true">+</span></span
+              >
+            </button>
+            <div class="product-heading">
+              <h3>{{ product.name }}</h3>
+              <span
+                >€ {{ '{:,.0f}'.format(product.price_eur).replace(',', '.')
+                }}</span
+              >
             </div>
-            <p class="role">{{ experience.role | upper }}</p>
-            <h3>{{ experience.company }}</h3>
-            <p class="description">{{ experience.description }}</p>
-            <div class="tags">
-              {% for technology in experience.technologies %}<span
-                >{{ technology }}</span
-              >{% endfor %}
-            </div>
+            <p>{{ product.material }}</p>
           </article>
           {% endfor %}
         </div>
+        <p class="catalog-note">
+          Una selezione di concept originali. Prezzi illustrativi.
+        </p>
       </section>
-      <div class="light-surface">
-        <section class="section python-project" id="progetto">
-          <div class="section-title">
-            <span class="eyebrow">PROGETTO PYTHON / QUESTO PORTFOLIO</span>
-            <h2>Il sito è anche<br />il mio progetto.</h2>
+      <section class="atelier" id="atelier" aria-labelledby="atelier-title">
+        <div class="atelier-intro">
+          <p class="eyebrow">02 — L’ATELIER</p>
+          <span class="atelier-star" aria-hidden="true">✳</span>
+          <p>UN’IDEA DI BELLEZZA.<br />UNA FIRMA PERSONALE.</p>
+        </div>
+        <div class="atelier-story">
+          <h2 id="atelier-title">
+            La bellezza<br />comincia da<br /><em>un gesto.</em>
+          </h2>
+          <div class="atelier-copy">
             <p>
-              Un backend Python da esplorare,<br />eseguire e discutere al
-              colloquio.
+              ORÉVA nasce come idea di un atelier contemporaneo, nel cuore della
+              tradizione orafa toscana. Un luogo dove il disegno incontra la
+              materia e ogni dettaglio ha una ragione.
             </p>
-          </div>
-          <div class="project-details">
             <p>
-              Le pagine sono generate da FastAPI e Jinja2 a partire da un
-              profilo validato con Pydantic. Il servizio espone un’API
-              documentata ed è eseguibile in un container Docker.
+              Ci ispirano le forme della natura, la precisione dell’architettura
+              e quella luce speciale che soltanto l’oro sa trattenere.
             </p>
-            <div class="project-stack">
-              <span>Python 3.13</span><span>FastAPI</span><span>Pydantic</span
-              ><span>Jinja2</span><span>Docker</span><span>pytest</span>
-            </div>
-            <div class="project-links">
-              <a href="/docs">Esplora l’API ↗</a
-              ><a href="/api/profile">Profilo in JSON ↗</a
-              ><a href="/health">Stato del servizio ↗</a>
-            <a href="https://github.com/fede11fm/federico-python-portfolio">Codice su GitHub ↗</a>
-            </div>
-            <p class="project-note">
-              La scena 3D viene eseguita nel browser con JavaScript e Three.js.
-            </p>
+            <a class="text-link light" href="#su-misura"
+              >Entra nel nostro mondo</a
+            >
           </div>
-        </section>
-        <section class="section skills" id="competenze">
-          <div class="section-title">
-            <span class="eyebrow">02 — COMPETENZE</span>
-            <h2>
-              Dentro la<br />mia cassetta<br />degli attrezzi<span>.</span>
-            </h2>
+        </div>
+        <div class="craft-steps">
+          <div>
+            <span>01 / IL DISEGNO</span>
+            <h3>Prima, un’intuizione.</h3>
+            <p>Un segno semplice da trasformare in una forma che sorprende.</p>
+          </div>
+          <div>
+            <span>02 / LA MATERIA</span>
+            <h3>Poi, il carattere.</h3>
             <p>
-              Linguaggi, framework e strumenti<br />del mio profilo informatico.
+              L’oro come punto di partenza. La luce come parte del progetto.
             </p>
           </div>
-          <div class="skill-rows">
-            {% for skill in profile.skills %}
-            <article>
-              <div class="skill-label">
-                <span>{{ '%02d' | format(loop.index) }}</span>
-                <h3>{{ skill.title }}</h3>
-                <span aria-hidden="true">{{ skill.symbol }}</span>
-              </div>
-              <div class="skill-tags">
-                {% for technology in skill.technologies %}<span
-                  >{{ technology }}</span
-                >{% endfor %}
-              </div>
-            </article>
-            {% endfor %}
+          <div>
+            <span>03 / IL DETTAGLIO</span>
+            <h3>Infine, l’emozione.</h3>
+            <p>
+              Superfici, proporzioni e piccoli gesti che rendono un gioiello
+              personale.
+            </p>
           </div>
-        </section>
-        <section class="section education" id="formazione">
-          <div class="section-title">
-            <span class="eyebrow">03 — FORMAZIONE TECNICA</span>
-            <h2>Le basi.<br />E il prossimo passo.</h2>
-          </div>
-          <div class="education-list">
-            {% for education in profile.education %}
-            <article>
-              <div>
-                <span>{{ education.period or 'CORSO SPECIALISTICO' }}</span
-                ><span>{{ education.institution | upper }}</span>
-              </div>
-              <h3>{{ education.title }}</h3>
-              {% if education.note %}
-              <p>{{ education.note }}</p>
-              {% endif %}
-            </article>
-            {% endfor %}
-          </div>
-        </section>
-      </div>
-      <section class="section contact" id="contatti">
-        <div class="contact-intro">
-          <span class="eyebrow">04 — PARLIAMONE</span>
+        </div>
+      </section>
+      <section
+        class="bespoke section-space"
+        id="su-misura"
+        aria-labelledby="bespoke-title"
+      >
+        <div class="bespoke-visual">
+          <img
+            src="/static/images/luce.webp"
+            width="1254"
+            height="1254"
+            alt="Il pendente Luce: una piccola pietra luminosa abbracciata dall’oro"
+            loading="lazy"
+          /><span>IL LUSSO È RICONOSCERSI IN UN DETTAGLIO.</span>
+        </div>
+        <div class="bespoke-copy">
+          <p class="eyebrow">03 — UNA FIRMA PERSONALE</p>
+          <h2 id="bespoke-title">
+            La tua idea.<br /><em>La tua sfumatura.</em>
+          </h2>
           <p>
-            Hai un’opportunità nello sviluppo software<br />o nel supporto
-            tecnico? Conosciamoci.
+            Giallo, rosa o bianco. Una stessa forma può raccontare storie
+            diverse. Esplora il nostro concept Materia e trova il colore che ti
+            somiglia.
+          </p>
+          <button class="button button-outline" data-open-scene>
+            Personalizza il concept in 3D
+          </button>
+          <p class="bespoke-note">
+            Un’esperienza di design, da ogni punto di vista.
           </p>
         </div>
-        <a class="big-contact" href="mailto:{{ profile.email }}"
-          >Scrivimi<span>↗</span></a
-        >
-        <div class="contact-details">
-          <div>
-            <span>EMAIL</span
-            ><a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
-          </div>
-          <div>
-            <span>TELEFONO</span
-            ><a href="tel:{{ profile.phone }}">{{ profile.phone_display }}</a>
-          </div>
-          <a class="button outline" href="{{ url_for('download_cv') }}" download
-            >Scarica CV completo <span>↓</span></a
-          >
-        </div>
+      </section>
+      <section class="closing">
+        <p class="eyebrow">OLTRE IL TEMPO, DENTRO LA TUA STORIA.</p>
+        <p>Ci sono cose che non si indossano.<br /><em>Si sentono.</em></p>
+        <a class="text-link" href="#collezioni">Ritrova il tuo gioiello</a>
       </section>
     </main>
     <footer>
-      <a class="brand" href="#home">FM<span>.</span></a
-      ><span>{{ profile.name }} © {{ year }}</span
-      ><a href="#home">Torna su ↑</a>
+      <div class="footer-top">
+        <a class="footer-wordmark" href="#">ORÉVA</a
+        ><span>ATELIER ORAFO<br />AREZZO, TOSCANA</span
+        ><a href="#collezioni">Le collezioni</a><a href="#atelier">L’atelier</a>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          © {{ year }} ORÉVA. Atelier immaginario: gioielli, immagini e prezzi
+          sono parte di un progetto dimostrativo. Nessuna vendita attiva.
+        </p>
+        <div>
+          <a
+            href="https://github.com/fede11fm/federico-python-portfolio"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Il progetto su GitHub</a
+          ><a href="/docs">API</a>
+        </div>
+      </div>
     </footer>
-    <script
-      type="module"
-      src="{{ url_for('static', path='scene.js') }}"
-    ></script>
+    <dialog
+      id="product-dialog"
+      class="product-dialog"
+      aria-labelledby="product-title"
+    >
+      <button class="dialog-close" aria-label="Chiudi dettagli gioiello">
+        ×
+      </button>
+      <p id="product-status" class="dialog-status" role="status">
+        Caricamento del gioiello…
+      </p>
+      <div id="product-detail" class="product-detail" hidden>
+        <img id="detail-image" alt="" width="1254" height="1254" />
+        <div class="detail-copy">
+          <p class="eyebrow" id="detail-category"></p>
+          <h2 id="product-title"></h2>
+          <p id="detail-description"></p>
+          <dl>
+            <div>
+              <dt>Materia</dt>
+              <dd id="detail-material"></dd>
+            </div>
+            <div>
+              <dt>Collezione</dt>
+              <dd id="detail-collection"></dd>
+            </div>
+          </dl>
+          <p class="detail-price" id="detail-price"></p>
+          <p class="detail-note">
+            Gioiello di un atelier immaginario. Prezzo di concept, nessuna
+            vendita attiva.
+          </p>
+          <button class="button button-outline" id="detail-3d" data-open-scene>
+            Esplora Materia in 3D
+          </button>
+        </div>
+      </div>
+    </dialog>
+    <dialog
+      id="scene-dialog"
+      class="scene-dialog"
+      aria-labelledby="scene-title"
+    >
+      <button class="dialog-close" aria-label="Chiudi esperienza 3D">×</button>
+      <div class="scene-header">
+        <p class="eyebrow">ORÉVA — STUDIO DELLA MATERIA</p>
+        <h2 id="scene-title">Una forma. <em>Tre anime.</em></h2>
+        <p>Trascina per ruotare l’anello e osserva come cambia la luce.</p>
+      </div>
+      <div class="scene-stage">
+        <img
+          id="scene-fallback"
+          src="/static/images/materia.webp"
+          alt="Il concept Materia in oro giallo"
+          width="1254"
+          height="1254"
+        /><canvas
+          id="scene"
+          tabindex="0"
+          role="img"
+          aria-label="Anello 3D interattivo. Usa i tasti freccia per ruotare e i tasti più e meno per avvicinare o allontanare."
+          hidden
+        ></canvas
+        ><span class="scene-caption">MATERIA / MODELLO 3D ILLUSTRATIVO</span>
+      </div>
+      <div class="scene-controls">
+        <div
+          class="finish-options"
+          role="group"
+          aria-label="Scegli la finitura"
+        >
+          <button class="selected" data-finish="yellow" aria-pressed="true">
+            <span class="finish-dot yellow"></span>Oro giallo</button
+          ><button data-finish="rose" aria-pressed="false">
+            <span class="finish-dot rose"></span>Oro rosa</button
+          ><button data-finish="white" aria-pressed="false">
+            <span class="finish-dot white"></span>Oro bianco
+          </button>
+        </div>
+        <div class="scene-actions">
+          <button id="motion" aria-pressed="false">Pausa rotazione</button
+          ><button id="reset-scene">Ripristina vista</button>
+        </div>
+      </div>
+      <p id="scene-status" class="scene-note" role="status">
+        Modello di design illustrativo. La forma può differire dalle fotografie.
+      </p>
+    </dialog>
   </body>
 </html>

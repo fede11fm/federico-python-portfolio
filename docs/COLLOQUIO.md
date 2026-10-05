@@ -1,32 +1,35 @@
-# Preparare la demo al colloquio
+# Presentare ORÉVA al colloquio
 
-## Demo breve
+ORÉVA è un marchio orafo inventato. Il progetto dimostra un backend Python che serve un sito aziendale e un catalogo coerente tra template HTML e API. Il frontend 3D è JavaScript/WebGL: spiegare questa divisione aiuta a mostrare cosa fa davvero Python.
 
-1. Avvia `docker compose up --build --detach --wait` e apri la home.
-2. Mostra la pagina generata da Python e la scena 3D, indicando che WebGL è eseguito nel browser.
-3. Apri `/docs`, esegui `GET /api/profile` e confronta il risultato con la pagina.
-4. Mostra `app/models.py`: tipi, campi obbligatori e validazione del profilo.
-5. Esegui `uv run pytest` e spiega il test che verifica che il CV scaricato sia completo e identico all'originale.
-6. Mostra Dockerfile, utente non-root e healthcheck, poi la pipeline GitHub.
+## Demo in cinque minuti
 
-## Domande da saper affrontare
+1. Avvia `docker compose up --build` e apri la home. Con Docker Engine in WSL usa il comando specifico nel README e lascia il terminale aperto.
+2. Mostra il catalogo e l'anello interattivo. Spiega che il server genera l'HTML da dati validati, mentre il browser disegna la scena.
+3. Apri `/docs`, esegui `GET /api/catalog` e `GET /api/jewels/anello-materia`. Prova uno slug inesistente per mostrare la risposta 404.
+4. Apri `app/models.py` e `app/repository.py`: illustra campi, validazione e caricamento dei dati all'avvio.
+5. Esegui `uv run pytest`, poi mostra Dockerfile e una pipeline GitHub conclusa con successo. Scegli un test e spiega quale errore concreto impedisce.
 
-**Perché FastAPI?** Definisce le route, valida le risposte tramite modelli e genera OpenAPI. Il sito usa Jinja2 per HTML lato server. Le route che leggono file sono funzioni sincrone, eseguite da FastAPI nel threadpool.
+## Domande tecniche
 
-**Perché un'application factory?** Consente ai test di costruire un servizio con configurazione e dati isolati. La logica di startup rimane unica.
+**Perché FastAPI e Jinja2?** FastAPI gestisce route, contratti di risposta e schema OpenAPI. Jinja2 produce l'HTML lato server dagli stessi dati usati dall'API, evitando una seconda fonte per il catalogo.
 
-**Perché Pydantic?** Lo schema è condiviso da dati, API e template. Campi sconosciuti e valori invalidi vengono rifiutati all'avvio. Non si fa affidamento su un dizionario arbitrario.
+**Perché un'application factory?** I test possono creare applicazioni con configurazioni e file isolati. La logica di avvio resta unica, condivisa dalla demo e dai test.
 
-**Perché niente database?** I dati sono pochi, di sola lettura e versionati nel repository. Un database sarebbe giustificato da editing, account o dati aggiornati dagli utenti.
+**Cosa valida Pydantic?** I dati devono rispettare lo schema prima che il servizio sia avviato. Le risposte API hanno modelli espliciti. Mostra un vincolo reale nel codice e il relativo test, evitando di attribuire allo schema controlli che non contiene.
 
-**Qual è il limite di `/health`?** Conferma che l'applicazione è avviata dopo il caricamento dei dati. Non verifica continuamente la disponibilità di servizi esterni; qui non ce ne sono. Se qualcuno rimuove il PDF dopo il startup, il download restituisce 404.
+**Perché usare un file JSON?** Il catalogo è piccolo, di sola lettura e versionato con il codice. Un database sarebbe utile con editing frequente, utenti o dati condivisi da più istanze; qui aggiungerebbe un servizio senza risolvere una necessità attuale.
 
-**Come funziona Docker?** Il primo stadio installa le dipendenze dal lockfile. Il runtime copia solo ambiente Python e applicazione, avvia Uvicorn come utente non-root e riceve i segnali correttamente tramite un comando exec. Compose aggiunge filesystem in sola lettura e restrizioni.
+**Cosa succede se manca un prodotto?** La route della singola scheda restituisce 404. Un catalogo invalido all'avvio impedisce invece la partenza dell'applicazione, così il container non dichiara sano un servizio con dati incompleti.
 
-**Cosa dimostrano i test?** Contratti API, rendering dei dati corretti, escape dell'HTML, file scaricato e intestazioni, rifiuto di dati invalidi, path indipendenti dalla working directory e impossibilità di scaricare percorsi arbitrari.
+**Cosa misura `/health`?** Conferma che l'applicazione è in esecuzione dopo il caricamento dei dati. Il catalogo vive in memoria e non dipende da un database o da API esterne. Non è una misura delle prestazioni né un sistema completo di monitoraggio.
 
-**Come lo distribuiresti?** Host per container, immagine versionata, reverse proxy HTTPS, monitoraggio e gestione della configurazione. GitHub ospita il codice; non avvia da solo un backend Python.
+**Come funziona Docker?** Il primo stadio installa dipendenze dal lockfile. Il runtime copia ambiente Python e applicazione nella stessa posizione, avvia Uvicorn come utente non-root e include un healthcheck. Compose espone la porta 8000 e aggiunge restrizioni del container.
+
+**Come si collegano GitHub e Docker?** GitHub conserva codice e cronologia, mentre Actions controlla il progetto. Docker costruisce un'immagine ed esegue il server. Il sito diventa pubblico solo quando il container viene avviato su un host raggiungibile da Internet.
+
+**Come lo estenderesti?** Per una gestione del catalogo: database, pannello autenticato, migrazioni e test dei permessi. Per un negozio: disponibilità, ordini, pagamenti e gestione degli errori. Prima definirei i requisiti; la demo attuale non riceve transazioni o richieste reali.
 
 ## Presentarlo con trasparenza
 
-Leggi e prova il codice prima di presentarlo. Spiega le parti che comprendi e le decisioni che sapresti modificare. Non attribuire Python alle esperienze lavorative che nel CV usavano altre tecnologie. Questo portfolio è un progetto dimostrativo assistito, distinto da quelle esperienze; la sua utilità al colloquio dipende dalla tua capacità di discuterlo.
+Prima del colloquio, avvia il progetto, leggi il codice e prova una piccola modifica al catalogo. Presentalo come un progetto dimostrativo sviluppato con assistenza e chiarisci le parti che sapresti spiegare o cambiare. Non attribuirti esperienze commerciali con ORÉVA: l'azienda è inventata. Il valore della demo è la tua capacità di comprendere il codice e discuterne i compromessi.

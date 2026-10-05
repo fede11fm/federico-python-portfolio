@@ -7,3 +7,4 @@ app/static/vendor/** linguist-vendored=true
 *.yaml text eol=lf
 *.yml text eol=lf
 *.pdf binary
+app/static/fonts/** linguist-vendored=true

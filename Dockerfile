@@ -9,7 +9,7 @@ RUN uv sync --frozen --no-dev
 FROM python:3.13-slim-bookworm AS runtime
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/app/.venv/bin:$PATH" LOG_LEVEL=INFO
-RUN groupadd --gid 10001 portfolio && useradd --uid 10001 --gid portfolio --no-create-home portfolio
+RUN groupadd --gid 10001 oreva && useradd --uid 10001 --gid oreva --no-create-home oreva
 COPY --from=builder /app/.venv /app/.venv
 COPY --chown=10001:10001 app ./app
 USER 10001:10001

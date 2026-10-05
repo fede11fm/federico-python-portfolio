@@ -27,11 +27,12 @@ jobs:
       - name: HTTP smoke test in Docker
         run: |
           curl --fail http://127.0.0.1:8000/health
-          curl --fail http://127.0.0.1:8000/api/profile
+          curl --fail http://127.0.0.1:8000/api/catalog
+          curl --fail http://127.0.0.1:8000/api/jewels/anello-materia
           curl --fail http://127.0.0.1:8000/ > /tmp/home.html
-          grep -q 'Federico' /tmp/home.html
-          curl --fail http://127.0.0.1:8000/cv -o /tmp/cv.pdf
-          cmp app/assets/CV-Federico-Mariottini.pdf /tmp/cv.pdf
+          grep -q 'ORÉVA' /tmp/home.html
+          test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:8000/cv)" = "404"
+          test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:8000/api/profile)" = "404"
       - name: Container logs
         if: always()
         run: docker compose logs

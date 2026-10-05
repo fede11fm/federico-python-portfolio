@@ -1,1 +1,1 @@
-"""Portfolio di Federico Mariottini: presentazione e API Python."""
+"""ORÉVA: sito di un atelier orafo immaginario con catalogo e API Python."""

@@ -9,11 +9,10 @@ APP_DIR = Path(__file__).resolve().parent
 
 @dataclass(frozen=True)
 class Settings:
-    profile_path: Path = APP_DIR / "data" / "profile.json"
-    cv_path: Path = APP_DIR / "assets" / "CV-Federico-Mariottini.pdf"
+    catalog_path: Path = APP_DIR / "data" / "catalog.json"
     static_dir: Path = APP_DIR / "static"
     templates_dir: Path = APP_DIR / "templates"
-    version: str = "1.0.0"
+    version: str = "2.0.0"
     log_level: str = "INFO"
 
     @classmethod

@@ -1,0 +1,42 @@
+{
+  "name": "ORÉVA",
+  "subtitle": "Atelier orafo",
+  "city": "Arezzo, Toscana",
+  "description": "Un atelier immaginario in cui la materia incontra la luce. Gioielli dalle forme essenziali, ispirati al movimento e alla tradizione orafa toscana.",
+  "demo": true,
+  "products": [
+    {
+      "slug": "anello-materia",
+      "name": "Materia",
+      "category": "Anelli",
+      "collection": "Materia",
+      "material": "Oro giallo 18 kt",
+      "description": "Un volume scultoreo e una superficie luminosa: un anello che interpreta l'oro con una forma morbida e contemporanea.",
+      "price_eur": 1280,
+      "image": "/static/images/materia.webp",
+      "image_alt": "Anello Materia in oro giallo, dalle forme scultoree arrotondate"
+    },
+    {
+      "slug": "orecchini-orbita",
+      "name": "Orbita",
+      "category": "Orecchini",
+      "collection": "Orbita",
+      "material": "Oro giallo 18 kt",
+      "description": "Due curve leggere disegnano un equilibrio essenziale. Orecchini pensati come piccoli frammenti di movimento, da indossare ogni giorno.",
+      "price_eur": 860,
+      "image": "/static/images/orbita.webp",
+      "image_alt": "Orecchini Orbita in oro giallo, con una silhouette circolare essenziale"
+    },
+    {
+      "slug": "collana-luce",
+      "name": "Luce",
+      "category": "Collane",
+      "collection": "Luce",
+      "material": "Oro giallo 18 kt e diamante",
+      "description": "Una catena sottile custodisce un punto di luce. Una collana dalle proporzioni delicate che porta il dettaglio al centro della composizione.",
+      "price_eur": 1490,
+      "image": "/static/images/luce.webp",
+      "image_alt": "Collana Luce in oro giallo con pendente e diamante"
+    }
+  ]
+}

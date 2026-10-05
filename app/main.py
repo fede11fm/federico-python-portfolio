@@ -9,17 +9,17 @@ from typing import cast
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException
 from starlette.middleware.base import RequestResponseEndpoint
 
 from app.config import Settings
-from app.models import HealthStatus, Profile
-from app.repository import ProfileRepository
+from app.models import Catalog, HealthStatus, Product
+from app.repository import CatalogRepository
 
-logger = logging.getLogger("portfolio")
+logger = logging.getLogger("oreva")
 CSP = (
     "default-src 'self'; script-src 'self'; style-src 'self'; "
     "img-src 'self' data:; font-src 'self'; connect-src 'self'; "
@@ -30,21 +30,19 @@ CSP = (
 def create_app(settings: Settings | None = None) -> FastAPI:
     config = settings or Settings.from_env()
     templates = Jinja2Templates(directory=config.templates_dir)
-    repository = ProfileRepository(config.profile_path)
+    repository = CatalogRepository(config.catalog_path)
 
     @asynccontextmanager
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         logging.basicConfig(level=config.log_level, format="%(levelname)s %(name)s %(message)s")
-        application.state.profile = repository.load()
-        if not config.cv_path.is_file():
-            raise RuntimeError("Il curriculum completo non è disponibile")
+        application.state.catalog = repository.load()
         logger.info("event=startup version=%s", config.version)
         yield
         logger.info("event=shutdown")
 
     application = FastAPI(
-        title="Federico Mariottini — Portfolio API",
-        description="API di sola lettura del portfolio professionale.",
+        title="ORÉVA — Catalogo API",
+        description="Catalogo di un atelier orafo immaginario. Progetto dimostrativo.",
         version=config.version,
         docs_url=None,
         redoc_url=None,
@@ -75,31 +73,33 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @application.get("/", response_class=HTMLResponse, include_in_schema=False)
     def homepage(request: Request) -> Response:
-        profile: Profile = request.app.state.profile
+        catalog: Catalog = request.app.state.catalog
         return templates.TemplateResponse(
             request=request,
             name="index.html",
-            context={"profile": profile, "year": datetime.now(UTC).year},
+            context={"catalog": catalog, "year": datetime.now(UTC).year},
         )
 
-    @application.get("/api/profile", response_model=Profile, tags=["profile"])
-    def get_profile(request: Request) -> Profile:
-        return cast(Profile, request.app.state.profile)
+    @application.get("/api/catalog", response_model=Catalog, tags=["catalog"])
+    def get_catalog(request: Request) -> Catalog:
+        return cast(Catalog, request.app.state.catalog)
+
+    @application.get(
+        "/api/jewels/{slug}",
+        response_model=Product,
+        tags=["catalog"],
+        responses={404: {"description": "Gioiello non trovato"}},
+    )
+    def get_jewel(slug: str, request: Request) -> Product:
+        catalog = cast(Catalog, request.app.state.catalog)
+        for product in catalog.products:
+            if product.slug == slug:
+                return product
+        raise HTTPException(status_code=404, detail="Gioiello non trovato")
 
     @application.get("/health", response_model=HealthStatus, tags=["operations"])
     def health() -> HealthStatus:
         return HealthStatus(version=config.version)
-
-    @application.get("/cv", response_class=FileResponse, tags=["profile"])
-    def download_cv() -> FileResponse:
-        if not config.cv_path.is_file():
-            raise HTTPException(status_code=404, detail="Curriculum non disponibile")
-        return FileResponse(
-            config.cv_path,
-            media_type="application/pdf",
-            filename="CV-Federico-Mariottini.pdf",
-            headers={"Cache-Control": "no-store"},
-        )
 
     @application.get("/docs", response_class=HTMLResponse, include_in_schema=False)
     def api_docs(request: Request) -> Response:

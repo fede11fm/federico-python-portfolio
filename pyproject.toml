@@ -1,7 +1,7 @@
 [project]
-name = "federico-python-portfolio"
-version = "1.0.0"
-description = "Portfolio Python con FastAPI, template Jinja2, API tipizzate e scena WebGL."
+name = "oreva-atelier"
+version = "2.0.0"
+description = "Atelier orafo immaginario con FastAPI, catalogo tipizzato e scena WebGL."
 requires-python = ">=3.13,<3.14"
 dependencies = [
   "fastapi>=0.115,<1",
