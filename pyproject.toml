@@ -34,3 +34,6 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 python_version = "3.13"
 strict = true
 files = ["app"]
+
+[tool.vercel]
+entrypoint = "app.main:app"

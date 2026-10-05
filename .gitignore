@@ -19,3 +19,4 @@ dist/
 *.tar.gz
 
 migrate-template.py
+.vercel/
