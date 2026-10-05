@@ -1,6 +1,5 @@
-*
-!app/
-!app/**
+/*
+!app
 !pyproject.toml
 !uv.lock
 !.python-version
