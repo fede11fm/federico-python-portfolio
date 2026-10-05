@@ -1,0 +1,9 @@
+app/static/vendor/** linguist-vendored=true
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.pdf binary

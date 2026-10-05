@@ -1,5 +1,7 @@
 # Federico Mariottini — Python Portfolio
 
+[![Python and Docker checks](https://github.com/fede11fm/federico-python-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/fede11fm/federico-python-portfolio/actions/workflows/ci.yml)
+
 Portfolio personale orientato al mondo informatico, con backend **Python 3.13 / FastAPI**, template **Jinja2**, profilo validato con **Pydantic**, scena **Three.js** e avvio con **Docker Compose**.
 
 Questo repository è un progetto dimostrativo da esplorare e discutere al colloquio. Le esperienze professionali riportate restano quelle del curriculum: i gestionali al Centro Chirurgico Toscano usavano JavaScript, React, HTML e SQL; il tirocinio a Uno Informatica C++, JavaScript e Angular. Il progetto Python di questo repository è presentato separatamente da quelle esperienze.
@@ -20,6 +22,10 @@ docker compose down
 ```
 
 La porta predefinita è esposta solo sull'interfaccia locale. Per cambiarla, copia `.env.example` in `.env` e modifica `PORT`. `BIND_ADDRESS` controlla l’interfaccia di ascolto (predefinita `127.0.0.1`). Il container usa un utente senza privilegi, filesystem in sola lettura, nessuna capability aggiuntiva e un healthcheck HTTP. Non viene pubblicato automaticamente su Internet.
+
+### Docker Engine dentro WSL
+
+Se utilizzi Docker Engine in Ubuntu/WSL senza Docker Desktop, mantieni aperta una sessione WSL con `docker compose up --build` in primo piano. I servizi systemd da soli non mantengono attiva la distribuzione. Se Windows non raggiunge `localhost`, usa `BIND_ADDRESS=0.0.0.0` nel file `.env` locale e l’indirizzo restituito da `wsl hostname -I`, con porta 8000. Questa impostazione rende il servizio disponibile sulle interfacce della distribuzione; il valore predefinito del progetto resta `127.0.0.1`.
 
 ## Sviluppo locale
 

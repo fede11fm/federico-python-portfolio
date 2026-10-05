@@ -7,16 +7,56 @@
   "phone_display": "+39 347 074 4294",
   "summary": "Ho collaborato allo sviluppo di gestionali front-end e back-end. Voglio continuare a crescere nello sviluppo Python e nel supporto tecnico.",
   "experiences": [
-    {"company": "Centro Chirurgico Toscano", "role": "Sviluppatore informatico", "period": "2023 — 2024", "description": "Sviluppo di gestionali lato front-end e back-end con JavaScript, React, HTML e SQL.", "technologies": ["JavaScript", "React", "HTML", "SQL"]},
-    {"company": "Uno Informatica", "role": "Tirocinante sviluppatore", "period": "2023", "description": "Programmazione software con C++, JavaScript e Angular durante il tirocinio formativo.", "technologies": ["C++", "JavaScript", "Angular"]}
+    {
+      "company": "Centro Chirurgico Toscano",
+      "role": "Sviluppatore informatico",
+      "period": "2023 — 2024",
+      "description": "Sviluppo di gestionali lato front-end e back-end con JavaScript, React, HTML e SQL.",
+      "technologies": ["JavaScript", "React", "HTML", "SQL"]
+    },
+    {
+      "company": "Uno Informatica",
+      "role": "Tirocinante sviluppatore",
+      "period": "2023",
+      "description": "Programmazione software con C++, JavaScript e Angular durante il tirocinio formativo.",
+      "technologies": ["C++", "JavaScript", "Angular"]
+    }
   ],
   "skills": [
-    {"title": "Front-end", "symbol": "</>", "technologies": ["JavaScript", "TypeScript", "React", "Angular", "HTML", "CSS"]},
-    {"title": "Linguaggi & dati", "symbol": "{ }", "technologies": ["Python", "C++", "C#", "PHP", "SQL"]},
-    {"title": "Web & strumenti", "symbol": "[ + ]", "technologies": ["WordPress", "Shopify", "Visual Studio"]}
+    {
+      "title": "Front-end",
+      "symbol": "</>",
+      "technologies": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Angular",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "title": "Linguaggi & dati",
+      "symbol": "{ }",
+      "technologies": ["Python", "C++", "C#", "PHP", "SQL"]
+    },
+    {
+      "title": "Web & strumenti",
+      "symbol": "[ + ]",
+      "technologies": ["WordPress", "Shopify", "Visual Studio"]
+    }
   ],
   "education": [
-    {"title": "Ingegneria informatica", "institution": "Politecnico di Milano", "period": "2017 — 2021", "note": "Studi universitari. Percorso triennale non concluso."},
-    {"title": "Sviluppo software", "institution": "Confcommercio Arezzo", "note": "Corso specialistico"}
+    {
+      "title": "Ingegneria informatica",
+      "institution": "Politecnico di Milano",
+      "period": "2017 — 2021",
+      "note": "Studi universitari. Percorso triennale non concluso."
+    },
+    {
+      "title": "Sviluppo software",
+      "institution": "Confcommercio Arezzo",
+      "note": "Corso specialistico"
+    }
   ]
 }
