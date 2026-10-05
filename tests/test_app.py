@@ -47,8 +47,16 @@ def test_catalog_contract_and_demo_identity(client: TestClient, catalog: Catalog
     assert catalog.name == "ORÉVA"
     assert catalog.city == "Arezzo, Toscana"
     assert catalog.demo is True
-    assert len(catalog.products) == 3
-    assert {product.category for product in catalog.products} == {"Anelli", "Orecchini", "Collane"}
+    assert len(catalog.products) == 6
+    assert {product.category for product in catalog.products} == {
+        "Anelli",
+        "Bracciali",
+        "Collane",
+        "Orecchini",
+        "Cerimonia",
+        "Uomo",
+    }
+    assert {product.collection for product in catalog.products} == {"Trama", "Riflessi"}
 
 
 def test_single_jewel_matches_catalog(client: TestClient, catalog: Catalog) -> None:
@@ -98,7 +106,7 @@ def test_headers_and_unique_request_ids(client: TestClient, path: str) -> None:
     assert client.get(path).headers["x-request-id"] != response.headers["x-request-id"]
 
 
-def test_static_assets_and_no_arbitrary_file_access(client: TestClient) -> None:
+def test_static_assets_and_no_arbitrary_file_access(client: TestClient, catalog: Catalog) -> None:
     for asset in [
         "style.css",
         "oreva.js",
@@ -107,6 +115,10 @@ def test_static_assets_and_no_arbitrary_file_access(client: TestClient) -> None:
         "vendor/swagger-ui.css",
     ]:
         assert client.get(f"/static/{asset}").status_code == 200
+    for product in catalog.products:
+        response = client.get(product.image)
+        assert response.status_code == 200
+        assert response.headers["content-type"] == "image/webp"
     assert client.get("/static/%2e%2e/data/catalog.json").status_code == 404
     assert client.get("/.env").status_code == 404
 
@@ -152,6 +164,20 @@ def test_template_escapes_catalog_content(tmp_path: Path, catalog: Catalog) -> N
         response = client.get("/")
         assert "<script>alert" not in response.text
         assert "&lt;script&gt;" in response.text
+
+
+def test_homepage_allows_catalog_with_one_category(tmp_path: Path, catalog: Catalog) -> None:
+    data = catalog.model_dump()
+    data["products"] = [data["products"][0]]
+    reduced_catalog = Catalog.model_validate(data)
+    location = tmp_path / "catalog.json"
+    location.write_text(reduced_catalog.model_dump_json(), encoding="utf-8")
+    with TestClient(create_app(replace(Settings(), catalog_path=location))) as client:
+        response = client.get("/")
+        assert response.status_code == 200
+        assert reduced_catalog.products[0].name in response.text
+        assert response.text.count('class="category-card"') == 1
+        assert len(client.get("/api/catalog").json()["products"]) == 1
 
 
 def test_paths_work_outside_project_directory(

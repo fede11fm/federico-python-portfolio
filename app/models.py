@@ -12,7 +12,7 @@ class StrictModel(BaseModel):
 class Product(StrictModel):
     slug: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
     name: str = Field(min_length=1)
-    category: Literal["Anelli", "Orecchini", "Collane"]
+    category: Literal["Anelli", "Bracciali", "Collane", "Orecchini", "Cerimonia", "Uomo"]
     collection: str = Field(min_length=1)
     material: str = Field(min_length=1)
     description: str = Field(min_length=1)
