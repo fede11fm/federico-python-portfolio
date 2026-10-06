@@ -10,7 +10,6 @@ htmlcov/
 .env.*
 !.env.example
 .tools/
-.openai/
 dist/
 /*.png
 /*.pdf
